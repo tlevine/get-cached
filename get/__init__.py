@@ -4,18 +4,22 @@ import re
 from time import sleep
 from random import normalvariate
 
-# Cache
-import pickle
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
 
-# HTTP
-from urllib2 import urlopen
-from urllib import urlretrieve
-from urlparse import urljoin
+try:
+    from urllib.request import urlretrieve
+except ImportError:
+    from urllib import urlretrieve
 
-# HTML
-from lxml.html import fromstring, tostring
+try:
+    from urllib.parse import urljoin
+except ImportError:
+    from urlparse import urljoin
 
-def randomsleep(mean = 8, sd = 4):
+def _randomsleep(mean = 8, sd = 4):
     "Sleep for a random amount of time"
     seconds=normalvariate(mean, sd)
     if seconds>0:
@@ -36,8 +40,8 @@ def get(url, cachedir = '.'):
 
     # Download
     if not os.path.exists(local_file):
-       print 'Downloading and saving %s' % url
+       print('Downloading and saving %s' % url)
        urlretrieve(url, filename = local_file)
-       randomsleep(1, 0.5)
+       _randomsleep(1, 0.5)
 
     return open(local_file).read()
