@@ -14,11 +14,6 @@ try:
 except ImportError:
     from urllib import urlretrieve
 
-try:
-    from urllib.parse import urljoin
-except ImportError:
-    from urlparse import urljoin
-
 def _randomsleep(mean = 8, sd = 4):
     "Sleep for a random amount of time"
     seconds=normalvariate(mean, sd)
