@@ -28,7 +28,7 @@ def _randomsleep(mean = 8, sd = 4):
 def get(url, cachedir = '.'):
     'Download a web file, or load the version from disk.'
     tmp1 = re.sub(r'^https?://', '', url)
-    tmp2 = [cachedir] + filter(None, tmp1.split('/'))
+    tmp2 = [cachedir] + list(filter(None, tmp1.split('/')))
     local_file = os.path.join(*tmp2)
     local_dir = os.path.join(*tmp2[:-1])
     del(tmp1)
