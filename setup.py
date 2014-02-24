@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='get-cached',
-      version='0.0.2',
+      version='0.0.3',
       description='Cache your get requests',
       author='Thomas Levine',
       author_email='_@thomaslevine.com',
