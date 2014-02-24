@@ -31,6 +31,10 @@ def test_read_cache():
                    sleep = sleep, load = True)
     assert observed == expected
 
+    observed2 = get(url, cachedir = cachedir, downloader = downloader,
+                    sleep = sleep, load = False)
+    assert observed2 == None
+
     shutil.rmtree(cachedir)
 
 def test_write_cache():
