@@ -9,16 +9,13 @@ def test_get():
     sleep = lambda:None
     url = 'http://foo.bar/baz'
 
-    returned = get(url, cachedir = cachedir, downloader = downloader,
+    observed = get(url, cachedir = cachedir, downloader = downloader,
                    sleep = sleep, load = True)
-    assert returned == downloader(None)
+    assert observed == downloader(None)
 
-    with open(os.path.join(cachedir, 'foo.bar', 'baz'), 'rb') as fp:
-        read = fp.read()
-    assert read == downloader(None)
     shutil.rmtree(cachedir)
 
-def test_download():
+def test_read_cache():
     downloader = lambda _:bytes('abcde')
     cachedir = tempfile.mkdtemp()
     sleep = lambda:None
@@ -33,5 +30,21 @@ def test_download():
     observed = get(url, cachedir = cachedir, downloader = downloader,
                    sleep = sleep, load = True)
     assert observed == expected
+
+    shutil.rmtree(cachedir)
+
+def test_write_cache():
+    downloader = lambda _:bytes('abcde')
+    cachedir = tempfile.mkdtemp()
+    sleep = lambda:None
+    url = 'http://foo.bar/baz'
+    os.makedirs(os.path.join(cachedir, 'foo.bar'))
+
+    get(url, cachedir = cachedir, downloader = downloader,
+        sleep = sleep, load = False)
+
+    with open(os.path.join(cachedir, 'foo.bar', 'baz'), 'rb') as fp:
+        read = fp.read()
+    assert read == downloader(None)
 
     shutil.rmtree(cachedir)
