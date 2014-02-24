@@ -12,10 +12,18 @@ except ImportError:
     except ImportError:
         from urllib2 import urlopen
     def _get(url):
-        return urlopen(url).read()
+        fp = urlopen(url)
+        if fp.code == 200:
+            return fp.read()
+        else:
+            raise ValueError('Download failed')
 else:
     def _get(url):
-        return requests.get(url).content
+        r = requests.get(url)
+        if r.ok:
+            return r.content
+        else:
+            raise ValueError('Download failed')
 
 def _randomsleep(mean = 8, sd = 4):
     "Sleep for a random amount of time"
