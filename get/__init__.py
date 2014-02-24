@@ -5,14 +5,17 @@ from time import sleep
 from random import normalvariate
 
 try:
-    from urllib.request import urlopen
+    import requests
 except ImportError:
-    from urllib2 import urlopen
-
-try:
-    from urllib.request import urlretrieve
-except ImportError:
-    from urllib import urlretrieve
+    try:
+        from urllib.request import urlopen
+    except ImportError:
+        from urllib2 import urlopen
+    def _get(url):
+        return urlopen(url).read()
+else:
+    def _get(url):
+        return requests.get(url).content
 
 def _randomsleep(mean = 8, sd = 4):
     "Sleep for a random amount of time"
@@ -20,7 +23,7 @@ def _randomsleep(mean = 8, sd = 4):
     if seconds>0:
         sleep(seconds)
 
-def get(url, cachedir = '.', load = True):
+def get(url, cachedir = '.', load = True, downloader = _get):
     'Download a web file, or load the version from disk.'
     tmp1 = re.sub(r'^https?://', '', url)
     tmp2 = [cachedir] + list(filter(None, tmp1.split('/')))
@@ -36,7 +39,8 @@ def get(url, cachedir = '.', load = True):
     # Download
     if not os.path.exists(local_file):
        print('Downloading and saving %s' % url)
-       urlretrieve(url, filename = local_file)
+       with open(local_file, 'wb') as fp:
+           fp.write(_get(url))
        _randomsleep(1, 0.5)
 
     if load:
