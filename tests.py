@@ -2,6 +2,7 @@ import tempfile, os
 import shutil
 
 from get import get
+from get.helpers import _paths
 
 def test_get():
     downloader = lambda _:bytes('abcde')
@@ -60,3 +61,8 @@ def test_write_cache():
     assert read == downloader(None)
 
     shutil.rmtree(cachedir)
+
+def test_paths():
+    observed = _paths('abc','http://la.la/la')
+    expected = os.path.join('abc','la.la'), os.path.join('abc','la.la','la')
+    assert observed == expected, (observed, expected)
