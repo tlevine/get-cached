@@ -20,7 +20,7 @@ def _randomsleep(mean = 8, sd = 4):
     if seconds>0:
         sleep(seconds)
 
-def get(url, cachedir = '.'):
+def get(url, cachedir = '.', load = True):
     'Download a web file, or load the version from disk.'
     tmp1 = re.sub(r'^https?://', '', url)
     tmp2 = [cachedir] + list(filter(None, tmp1.split('/')))
@@ -39,4 +39,5 @@ def get(url, cachedir = '.'):
        urlretrieve(url, filename = local_file)
        _randomsleep(1, 0.5)
 
-    return open(local_file).read()
+    if load:
+        return open(local_file).read()
