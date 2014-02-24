@@ -5,7 +5,7 @@ from .helpers import _randomsleep, _paths
 
 def get(url, cachedir = '.', load = True, downloader = _get, sleep = _randomsleep):
     'Download a web file, or load the version from disk.'
-    local_file, local_dir = _paths(cachedir, url)
+    local_dir, local_file = _paths(cachedir, url)
 
     # mkdir -p
     if not os.path.exists(local_dir):
