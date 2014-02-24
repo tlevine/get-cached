@@ -1,11 +1,11 @@
 import os
 
-from download import _get
-import helpers
+from .download import _get
+from .helpers import _randomsleep, _paths
 
-def get(url, cachedir = '.', load = True, downloader = _get, sleep = helpers._randomsleep):
+def get(url, cachedir = '.', load = True, downloader = _get, sleep = _randomsleep):
     'Download a web file, or load the version from disk.'
-    local_file, local_dir = helpers._paths(cachedir, url)
+    local_file, local_dir = _paths(cachedir, url)
 
     # mkdir -p
     if not os.path.exists(local_dir):
