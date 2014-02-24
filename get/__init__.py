@@ -1,24 +1,11 @@
-#!/usr/bin/env python
 import os
-import re
-from time import sleep
-from random import normalvariate
+
 from download import _get
+import helpers
 
-def _randomsleep(mean = 8, sd = 4):
-    "Sleep for a random amount of time"
-    seconds=normalvariate(mean, sd)
-    if seconds>0:
-        sleep(seconds)
-
-def get(url, cachedir = '.', load = True, downloader = _get):
+def get(url, cachedir = '.', load = True, downloader = _get, sleep = helpers._randomsleep):
     'Download a web file, or load the version from disk.'
-    tmp1 = re.sub(r'^https?://', '', url)
-    tmp2 = [cachedir] + list(filter(None, tmp1.split('/')))
-    local_file = os.path.join(*tmp2)
-    local_dir = os.path.join(*tmp2[:-1])
-    del(tmp1)
-    del(tmp2)
+    local_file, local_dir = helpers._paths(cachedir, url)
 
     # mkdir -p
     if not os.path.exists(local_dir):
@@ -28,7 +15,7 @@ def get(url, cachedir = '.', load = True, downloader = _get):
     if not os.path.exists(local_file):
        with open(local_file, 'wb') as fp:
            fp.write(_get(url))
-       _randomsleep(1, 0.5)
+       sleep()
 
     if load:
         return open(local_file).read()
