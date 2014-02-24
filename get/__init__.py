@@ -14,7 +14,7 @@ def get(url, cachedir = '.', load = True, downloader = _get, sleep = _randomslee
     # Download
     if not os.path.exists(local_file):
        with open(local_file, 'wb') as fp:
-           fp.write(_get(url))
+           fp.write(downloader(url))
        sleep()
 
     if load:
