@@ -30,10 +30,18 @@ def test_read_cache():
     observed = get(url, cachedir = cachedir, downloader = downloader,
                    sleep = sleep, load = True)
     assert observed == expected
+    shutil.rmtree(cachedir)
 
-    observed2 = get(url, cachedir = cachedir, downloader = downloader,
-                    sleep = sleep, load = False)
-    assert observed2 == None
+def test_load_off():
+    downloader = lambda _:bytes('abcde')
+    cachedir = tempfile.mkdtemp()
+    sleep = lambda:None
+    url = 'http://foo.bar/baz'
+    os.makedirs(os.path.join(cachedir, 'foo.bar'))
+
+    observed = get(url, cachedir = cachedir, downloader = downloader,
+                   sleep = sleep, load = False)
+    assert observed == None
 
     shutil.rmtree(cachedir)
 
