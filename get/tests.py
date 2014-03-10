@@ -12,7 +12,7 @@ def test_get():
 
     observed = get(url, cachedir = cachedir, downloader = downloader,
                    sleep = sleep, load = True)
-    assert observed == downloader(None)
+    assert observed == downloader(None), (observed, downloader(None))
 
     shutil.rmtree(cachedir)
 
@@ -30,7 +30,7 @@ def test_read_cache():
 
     observed = get(url, cachedir = cachedir, downloader = downloader,
                    sleep = sleep, load = True)
-    assert observed == expected
+    assert observed == expected, (observed, expected)
     shutil.rmtree(cachedir)
 
 def test_load_off():
