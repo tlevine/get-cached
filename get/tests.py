@@ -5,7 +5,7 @@ from get import get
 from get.helpers import _paths
 
 def test_get():
-    downloader = lambda _:bytes('abcde')
+    downloader = lambda _:b'abcde'
     cachedir = tempfile.mkdtemp()
     sleep = lambda:None
     url = 'http://foo.bar/baz'
@@ -17,13 +17,13 @@ def test_get():
     shutil.rmtree(cachedir)
 
 def test_read_cache():
-    downloader = lambda _:bytes('abcde')
+    downloader = lambda _:b'abcde'
     cachedir = tempfile.mkdtemp()
     sleep = lambda:None
     url = 'http://foo.bar/baz'
     os.makedirs(os.path.join(cachedir, 'foo.bar'))
 
-    expected = bytes('lalalala')
+    expected = b'lalalala'
 
     with open(os.path.join(cachedir, 'foo.bar', 'baz'), 'wb') as fp:
         fp.write(expected)
@@ -34,7 +34,7 @@ def test_read_cache():
     shutil.rmtree(cachedir)
 
 def test_load_off():
-    downloader = lambda _:bytes('abcde')
+    downloader = lambda _:b'abcde'
     cachedir = tempfile.mkdtemp()
     sleep = lambda:None
     url = 'http://foo.bar/baz'
@@ -47,7 +47,7 @@ def test_load_off():
     shutil.rmtree(cachedir)
 
 def test_write_cache():
-    downloader = lambda _:bytes('abcde')
+    downloader = lambda _:b'abcde'
     cachedir = tempfile.mkdtemp()
     sleep = lambda:None
     url = 'http://foo.bar/baz'
