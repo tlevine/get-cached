@@ -18,4 +18,4 @@ def get(url, cachedir = '.', load = True, downloader = _get, sleep = _randomslee
        sleep()
 
     if load:
-        return open(local_file).read()
+        return open(local_file, 'rb').read()
