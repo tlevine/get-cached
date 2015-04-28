@@ -1,5 +1,8 @@
 This was extracted from [hardhat](https://github.com/tlevine/hardhat).
 
+I used it briefly but now recommend
+[requests and vlermv](http://thomaslevine.com/!/web-sites-to-data-tables-in-depth/) instead.
+
 ```sh
 pip install get-cached
 ```
